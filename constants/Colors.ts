@@ -22,5 +22,6 @@ export default {
   freesia: '#E1C340',
   paradisePink: '#E63462',
   gunmetal: '#333745',
-  separator: '#eee'
+  separator: '#eee',
+  success: '#4bb543'
 };

@@ -8,12 +8,14 @@ import {
 } from './AddIngredient';
 import {addIngredient, addRecipe} from '../services/ingredients';
 import moment from 'moment';
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import Colors from '../constants/Colors';
 import {useNavigation, useRoute} from '@react-navigation/native';
 import {TabEntypoIcon, TabFA5Icon} from '../navigation';
 import {searchRecipe} from '../services/spoonacular';
 import MultiSelect from 'react-native-multiple-select';
+import {useCollection} from 'react-firebase-hooks/firestore';
+import * as firebase from 'firebase';
 
 export interface recipeEntry {
     id?: string;
@@ -22,14 +24,36 @@ export interface recipeEntry {
     preparedAt: any;
 }
 
+const today = new Date();
+
 const SpoonacularModal = () =>  {
     const router = useRoute();
     const navigation = useNavigation();
+    const [ingredients, setIngredients] = useState<string[] | undefined>(undefined);
     const {data, closestExpDate} = router.params as { data: dataEntry[], closestExpDate: any };
     const [search, setSeach] = useState<string>('');
     const [recipes, setRecipes] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [selectedItems, setSelectedItems] = useState<any>([]);
+
+    const [getAllIngredients, loading, error] = useCollection(
+        firebase.default.firestore().collection('Ingredients'),
+        {
+            snapshotListenOptions: { includeMetadataChanges: true },
+        }
+    );
+
+    useEffect( () => {
+            const ingredientsFirestore = getAllIngredients?.docs
+                .map( (doc) => {
+                    return { id: doc.id, ...doc.data() as dataEntry }}
+                )
+                .filter( (res) => moment(res.exp_date.toDate()).diff(today, 'days') > 0 )
+                .map( (res) => res.name);
+            setIngredients(ingredientsFirestore as string[]);
+        }
+    , [getAllIngredients]);
+
     const addMissingIngredient = (missingIngredient: { amount: number, name: string }) => {
         setIsLoading(true);
         try {
@@ -41,7 +65,7 @@ const SpoonacularModal = () =>  {
                 confection_type: '',
                 ripeness: '',
                 quantity: missingIngredient.amount,
-                exp_date: closestExpDate.toDate(),
+                exp_date: moment().add(2, 'weeks').toDate(),
                 createdAt: moment().toDate(),
                 updatedAt: moment().toDate(),
                 boughtAt: moment().toDate()
@@ -122,7 +146,7 @@ const SpoonacularModal = () =>  {
                                         name: missedIngredient.name,
                                         amount: missedIngredient.amount,
                                     })}>
-                                        <Text>{missedIngredient.name}</Text>
+                                        <Text style={{ color: ingredients?.includes(missedIngredient.name) ? Colors.success : Colors.gunmetal }}>{missedIngredient.name}</Text>
                                     </TouchableOpacity>
                                 )
                             }

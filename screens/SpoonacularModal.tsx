@@ -70,8 +70,9 @@ const SpoonacularModal = () =>  {
 
     const _toSeparatedByComma = () => {
         const strings = selectedItems.map( (item: any) => {
-            return data.find( (val: any) => item === val.id );
+            return data.find( (val: any) => item === val.id )?.name;
         })
+        console.log(strings);
         return strings.join(',')
     }
 
@@ -116,8 +117,8 @@ const SpoonacularModal = () =>  {
                     return(
                         <React.Fragment key={index}>
                             <Text><Text style={{ fontWeight: 'bold' }}>Name:</Text> {recipe.title}</Text>
-                            { recipe.missedIngredientCount > 0 && recipe.missedIngredients.map( (missedIngredient: any) =>
-                                    <TouchableOpacity onPress={() => addMissingIngredient({
+                            { recipe.missedIngredientCount > 0 && recipe.missedIngredients.map( (missedIngredient: any, innerIndex: number) =>
+                                    <TouchableOpacity key={innerIndex} onPress={() => addMissingIngredient({
                                         name: missedIngredient.name,
                                         amount: missedIngredient.amount,
                                     })}>

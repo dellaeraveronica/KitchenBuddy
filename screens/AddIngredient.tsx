@@ -28,6 +28,7 @@ export interface dataEntry {
   createdAt: any;
   updatedAt: any;
   boughtAt?: any;
+  recipeId?: any;
 }
 
 export const fridgeLocations: {label: string, value: string, key: string}[] = [

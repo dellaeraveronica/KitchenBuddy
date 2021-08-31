@@ -1,6 +1,12 @@
 import {useNavigation} from '@react-navigation/native';
 import {useEffect, useState} from 'react';
-import {dataEntry, ingredientConfectionTypes} from '../AddIngredient';
+import {
+    dataEntry,
+    fridgeLocations,
+    ingredientCategories,
+    ingredientConfectionTypes,
+    ingredientRipeness
+} from '../AddIngredient';
 import {useCollection} from 'react-firebase-hooks/firestore';
 import * as firebase from 'firebase';
 import {Text, View} from '../../components/Themed';
@@ -65,10 +71,10 @@ const SameConfection = () => {
                                         <Text>{ingredient.id}</Text>
                                         <Text><Text style={{ fontWeight: 'bold' }}>Name:</Text> {ingredient.name}</Text>
                                         <Text><Text style={{ fontWeight: 'bold' }}>Brand:</Text> {ingredient.brand}</Text>
-                                        <Text><Text style={{ fontWeight: 'bold' }}>Category:</Text> {ingredient.category}</Text>
-                                        <Text><Text style={{ fontWeight: 'bold' }}>Location:</Text> {ingredient.location}</Text>
-                                        <Text><Text style={{ fontWeight: 'bold' }}>Confection:</Text> {ingredient.confection_type}</Text>
-                                        <Text><Text style={{ fontWeight: 'bold' }}>Ripeness:</Text> {ingredient.ripeness}</Text>
+                                        <Text><Text style={{ fontWeight: 'bold' }}>Category:</Text> {ingredient.category ? ingredientCategories[+ingredient.category].label : '' }</Text>
+                                        <Text><Text style={{ fontWeight: 'bold' }}>Location:</Text> {ingredient.location ? fridgeLocations[+ingredient.location].label : ''}</Text>
+                                        <Text><Text style={{ fontWeight: 'bold' }}>Confection:</Text> {ingredient.confection_type ? ingredientConfectionTypes[+ingredient.confection_type].label : ''}</Text>
+                                        <Text><Text style={{ fontWeight: 'bold' }}>Ripeness:</Text> {ingredient.ripeness ? ingredientRipeness[+ingredient.ripeness].label : ''}</Text>
                                         <Text><Text style={{ fontWeight: 'bold' }}>is frozen?:</Text> {ingredient.isFrozen ? 'Yes' : 'No'}</Text>
                                         <Text><Text style={{ fontWeight: 'bold' }}>is opened?:</Text> {ingredient.isOpened ? 'Yes' : 'No'}</Text>
                                         <Text><Text style={{ fontWeight: 'bold' }}>Created at:</Text> {ingredient.createdAt ? moment(ingredient.createdAt.toDate()).format('LLL') : ''}</Text>

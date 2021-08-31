@@ -3,7 +3,13 @@ import {Button, ScrollView, StyleSheet, TouchableOpacity} from 'react-native';
 import { Text, View } from '../components/Themed';
 import globalStyles from '../styles/global';
 import { useEffect, useState } from 'react';
-import { dataEntry } from './AddIngredient';
+import {
+  dataEntry,
+  fridgeLocations,
+  ingredientCategories,
+  ingredientConfectionTypes,
+  ingredientRipeness
+} from './AddIngredient';
 import {useCollection, useCollectionOnce} from 'react-firebase-hooks/firestore';
 import * as firebase from "firebase";
 import Colors from '../constants/Colors';
@@ -81,10 +87,10 @@ const ExpiringSoon = () => {
                           <Text>{expIngredient.id}</Text>
                           <Text><Text style={{ fontWeight: 'bold' }}>Name:</Text> {expIngredient.name}</Text>
                           <Text><Text style={{ fontWeight: 'bold' }}>Brand:</Text> {expIngredient.brand}</Text>
-                          <Text><Text style={{ fontWeight: 'bold' }}>Category:</Text> {expIngredient.category}</Text>
-                          <Text><Text style={{ fontWeight: 'bold' }}>Location:</Text> {expIngredient.location}</Text>
-                          <Text><Text style={{ fontWeight: 'bold' }}>Confection:</Text> {expIngredient.confection_type}</Text>
-                          <Text><Text style={{ fontWeight: 'bold' }}>Ripeness:</Text> {expIngredient.ripeness}</Text>
+                          <Text><Text style={{ fontWeight: 'bold' }}>Category:</Text> {expIngredient.category ? ingredientCategories[+expIngredient.category].label : ''}</Text>
+                          <Text><Text style={{ fontWeight: 'bold' }}>Location:</Text> {expIngredient.location ? fridgeLocations[+expIngredient.location].label : ''}</Text>
+                          <Text><Text style={{ fontWeight: 'bold' }}>Confection:</Text> {expIngredient.confection_type ? ingredientConfectionTypes[+expIngredient.confection_type].label : ''}</Text>
+                          <Text><Text style={{ fontWeight: 'bold' }}>Ripeness:</Text> {expIngredient.ripeness ? ingredientRipeness[+expIngredient.ripeness].label : ''}</Text>
                           <Text><Text style={{ fontWeight: 'bold' }}>is frozen?:</Text> {expIngredient.isFrozen ? 'Yes' : 'No'}</Text>
                           <Text><Text style={{ fontWeight: 'bold' }}>is opened?:</Text> {expIngredient.isOpened ? 'Yes' : 'No'}</Text>
                           <Text>{moment(expIngredient.exp_date.toDate()).diff(new Date(), 'days')} days remaining</Text>

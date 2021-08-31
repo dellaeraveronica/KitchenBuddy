@@ -8,7 +8,7 @@ import {useNavigation} from '@react-navigation/native';
 import {useCollection} from 'react-firebase-hooks/firestore';
 import * as firebase from 'firebase';
 import {useEffect, useState} from 'react';
-import {dataEntry} from '../AddIngredient';
+import {dataEntry, fridgeLocations, ingredientCategories, ingredientConfectionTypes} from '../AddIngredient';
 import moment from 'moment';
 import IngredientList from '../IngredientList';
 import CustomTextInput from '../../components/CustomTextInput';
@@ -66,9 +66,9 @@ const MissingData = () => {
                                         <Text>{ingredient.id}</Text>
                                         <Text><Text style={{ fontWeight: 'bold' }}>Name:</Text> {ingredient.name}</Text>
                                         <Text><Text style={{ fontWeight: 'bold' }}>Brand:</Text> {ingredient.brand}</Text>
-                                        <Text><Text style={{ fontWeight: 'bold' }}>Category:</Text> {ingredient.category}</Text>
-                                        <Text><Text style={{ fontWeight: 'bold' }}>Location:</Text> {ingredient.location}</Text>
-                                        <Text><Text style={{ fontWeight: 'bold' }}>Confection:</Text> {ingredient.confection_type}</Text>
+                                        <Text><Text style={{ fontWeight: 'bold' }}>Category:</Text> {ingredient.category ? ingredientCategories[+ingredient.category].label : ''}</Text>
+                                        <Text><Text style={{ fontWeight: 'bold' }}>Location:</Text> {ingredient.location ? fridgeLocations[+ingredient.location].label : ''}</Text>
+                                        <Text><Text style={{ fontWeight: 'bold' }}>Confection:</Text> {ingredient.confection_type ? ingredientConfectionTypes[+ingredient.confection_type].label : ''}</Text>
                                         <Text><Text style={{ fontWeight: 'bold' }}>Ripeness:</Text> {ingredient.ripeness}</Text>
                                         <Text><Text style={{ fontWeight: 'bold' }}>is frozen?:</Text> {ingredient.isFrozen ? 'Yes' : 'No'}</Text>
                                         <Text><Text style={{ fontWeight: 'bold' }}>is opened?:</Text> {ingredient.isOpened ? 'Yes' : 'No'}</Text>

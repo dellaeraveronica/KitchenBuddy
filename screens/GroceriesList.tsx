@@ -9,6 +9,7 @@ import { buyIngredient } from '../services/ingredients';
 import { TabMaterialIcon} from '../navigation';
 import { useNavigation } from '@react-navigation/native';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import moment from 'moment';
 
 export interface groceryEntry {
     id?: string;
@@ -19,7 +20,6 @@ export interface groceryEntry {
     exp_date: any;
     createdAt: any;
     updatedAt: any;
-    deletedAt: any;
 }
 
 const today = new Date();
@@ -39,7 +39,6 @@ const GroceriesList = () => {
             .map( (doc) => {
                 return { id: doc.id, ...doc.data() as groceryEntry }}
             )
-            .filter( (current) => !current.deletedAt)
         setGroceries(groceriesFirestore);
     }, [getAllGroceries])
 
@@ -65,7 +64,7 @@ const GroceriesList = () => {
                                         <Text><Text style={{ fontWeight: 'bold' }}>Quantity:</Text> {grocery.quantity}</Text>
                                         <Text><Text style={{ fontWeight: 'bold' }}>Category:</Text> {grocery.category}</Text>
                                         <Text><Text style={{ fontWeight: 'bold' }}>Confection type:</Text> {grocery.confection_type}</Text>
-                                        <Text><Text style={{ fontWeight: 'bold' }}>Exp. date:</Text> {grocery.exp_date?.toDate()}</Text>
+                                        <Text><Text style={{ fontWeight: 'bold' }}>Exp. date:</Text> {moment(grocery.exp_date?.toDate()).format('LLL')}</Text>
                                     </TouchableOpacity>
                                     <View style={{ flexDirection: 'row', justifyContent: 'flex-end' }}>
                                         <TouchableOpacity

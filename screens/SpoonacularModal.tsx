@@ -6,7 +6,7 @@ import globalStyles from '../styles/global';
 import {
     dataEntry,
 } from './AddIngredient';
-import {addIngredient, addRecipe} from '../services/ingredients';
+import {addRecipe, quickAddGrocery} from '../services/ingredients';
 import moment from 'moment';
 import {useEffect, useState} from 'react';
 import Colors from '../constants/Colors';
@@ -55,23 +55,19 @@ const SpoonacularModal = () =>  {
         }
     , [getAllIngredients]);
 
-    const addMissingIngredient = (missingIngredient: { amount: number, name: string }) => {
+    const addMissingIngredientToGroceries = (missingIngredient: { amount: number, name: string }) => {
         setIsLoading(true);
         try {
-            addIngredient({
+            quickAddGrocery({
                 name: missingIngredient.name,
-                brand: '',
                 category: '',
-                location: '',
                 confection_type: '',
-                ripeness: '',
                 quantity: missingIngredient.amount,
                 exp_date: moment().add(2, 'weeks').toDate(),
                 createdAt: moment().toDate(),
                 updatedAt: moment().toDate(),
-                boughtAt: moment().toDate()
             } as dataEntry)
-                .then( () => { Alert.alert('Success!', 'Ingredient added successfully'); })
+                .then( () => { Alert.alert('Success!', 'Grocery added successfully'); })
                 .finally( () => setIsLoading(false));
         } catch (e) {
             console.error('Submit failed', e);
@@ -143,7 +139,7 @@ const SpoonacularModal = () =>  {
                         <React.Fragment key={index}>
                             <Text><Text style={{ fontWeight: 'bold' }}>Name:</Text> {recipe.title}</Text>
                             { recipe.missedIngredientCount > 0 && recipe.missedIngredients.map( (missedIngredient: any, innerIndex: number) =>
-                                    <TouchableOpacity key={innerIndex} onPress={() => addMissingIngredient({
+                                    <TouchableOpacity key={innerIndex} onPress={() => addMissingIngredientToGroceries({
                                         name: missedIngredient.name,
                                         amount: missedIngredient.amount,
                                     })}>

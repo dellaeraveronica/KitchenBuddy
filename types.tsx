@@ -27,6 +27,7 @@ export type RootStackParamList = {
   SameCategory: undefined;
   SameConfection: undefined;
   ExpoBarCodeScanner: undefined;
+  Recipes: undefined;
   Spoonacular: { data: { name: string | undefined, id: string | undefined }[] | undefined, closestExpDate: string };
 };
 

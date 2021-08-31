@@ -149,7 +149,7 @@ const SpoonacularModal = () =>  {
                             }
                             <View style={{ flexDirection: 'row', justifyContent: 'flex-end' }}>
                                 <TouchableOpacity
-                                    onPress={ () => addRecipe(recipe) }
+                                    onPress={ () => addRecipe({...recipe, createdAt: new Date(), preparedAt: moment().add(2, 'weeks').toDate()}) }
                                     style={[styles.actionButton, { backgroundColor: Colors.orange }]}>
                                     <TabEntypoIcon name='plus' color={Colors.white} size={20} />
                                 </TouchableOpacity>

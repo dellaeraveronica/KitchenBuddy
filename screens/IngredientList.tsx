@@ -22,6 +22,7 @@ const IngredientList = () => {
                 <Button title="Same category" onPress={() => navigation.navigate('SameCategory')} />
                 <Button title="Same confection type" onPress={() => navigation.navigate('SameConfection')} />
                 <Button title="Barcode Scanner" onPress={() => navigation.navigate('ExpoBarCodeScanner')} />
+                <Button title="Recipes" onPress={() => navigation.navigate('Recipes')} />
             </View>
         </View>
     )

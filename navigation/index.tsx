@@ -30,6 +30,7 @@ import RecentlyBought from '../screens/queries/RecentlyBought';
 import LowQuantity from '../screens/queries/LowQuantity';
 import QuickAddModal from '../screens/QuickAddModal';
 import SpoonacularModal from '../screens/SpoonacularModal';
+import Recipes from '../screens/queries/Recipes';
 
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
   return (
@@ -65,6 +66,7 @@ function RootNavigator() {
       <Stack.Screen name="SameCategory" component={SameCategory} options={{ headerShown: false}} />
       <Stack.Screen name="SameConfection" component={SameConfection} options={{ headerShown: false}} />
       <Stack.Screen name="ExpoBarCodeScanner" component={ExpoBarCodeScanner} options={{ headerShown: false}} />
+      <Stack.Screen name="Recipes" component={Recipes} options={{ headerShown: false}} />
     </Stack.Navigator>
   );
 }

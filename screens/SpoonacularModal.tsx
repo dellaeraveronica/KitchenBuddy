@@ -16,6 +16,7 @@ import {searchRecipe} from '../services/spoonacular';
 import MultiSelect from 'react-native-multiple-select';
 import {useCollection} from 'react-firebase-hooks/firestore';
 import * as firebase from 'firebase';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
 export interface recipeEntry {
     id?: string;
@@ -136,7 +137,7 @@ const SpoonacularModal = () =>  {
                 hideSubmitButton
                 onSelectedItemsChange={ (items) => { console.log(items); setSelectedItems(items) } }
             />
-            <ScrollView alwaysBounceVertical={false} showsVerticalScrollIndicator={false} style={{ marginBottom: 30 }}>
+            <KeyboardAwareScrollView alwaysBounceVertical={false} showsVerticalScrollIndicator={false} style={{ marginBottom: 30 }}>
                 { recipes.length > 0 && recipes.map( (recipe: any, index: number) => {
                     return(
                         <React.Fragment key={index}>
@@ -162,7 +163,7 @@ const SpoonacularModal = () =>  {
                         </React.Fragment>
                     )
                 }) }
-            </ScrollView>
+            </KeyboardAwareScrollView>
             <View style={{ marginVertical: 30 }}>
                 <Button disabled={isLoading || !selectedItems.length} title="Search on Spoonacular" onPress={searchRecipes} />
             </View>

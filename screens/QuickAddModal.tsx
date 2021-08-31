@@ -8,6 +8,7 @@ import {quickAddGrocery} from '../services/ingredients';
 import {useState} from 'react';
 import Colors from '../constants/Colors';
 import {useNavigation, useRoute} from '@react-navigation/native';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
 const QuickAddModal = () => {
     const navigation = useNavigation();
@@ -35,9 +36,9 @@ const QuickAddModal = () => {
                 <Text style={styles.title}>Edit ingredient</Text>
                 <View style={styles.separator} />
             </View>
-            <ScrollView alwaysBounceVertical={false} showsVerticalScrollIndicator={false} style={{ marginBottom: 30 }}>
+            <KeyboardAwareScrollView alwaysBounceVertical={false} showsVerticalScrollIndicator={false} style={{ marginBottom: 30 }}>
                 <CustomTextInput label="Name *" placeholder="Enter a name" value={name} onChangeText={setName} />
-            </ScrollView>
+            </KeyboardAwareScrollView>
             <View style={{ marginVertical: 30 }}>
                 <Button disabled={isLoading || !name} title="Quick add" onPress={handleSubmit} />
             </View>

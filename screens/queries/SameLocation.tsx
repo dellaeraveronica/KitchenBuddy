@@ -13,6 +13,7 @@ import moment from 'moment';
 import CustomSelect from '../../components/CustomSelect';
 import {freezeIngredient, openIngredient} from '../../services/ingredients';
 import CustomTextInput from '../../components/CustomTextInput';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
 
 const SameLocation = () => {
@@ -56,7 +57,7 @@ const SameLocation = () => {
                     <CustomTextInput label="Search" placeholder="Enter a name" value={search} onChangeText={setSearch} />
                     <CustomSelect label="Location" placeholder="Select a location" value={location} onValueChange={setLocation} items={fridgeLocations} />
                     { !!location &&
-                        <ScrollView alwaysBounceVertical={false} showsVerticalScrollIndicator={false} style={{ marginBottom: 50 }}>
+                        <KeyboardAwareScrollView alwaysBounceVertical={false} showsVerticalScrollIndicator={false} style={{ marginBottom: 50 }}>
                             { ingredients && ingredients.map( (ingredient: dataEntry, index: number) => {
                                 return(
                                     <React.Fragment key={index}>
@@ -96,7 +97,7 @@ const SameLocation = () => {
                                     </React.Fragment>
                                 )
                             }) }
-                        </ScrollView>
+                        </KeyboardAwareScrollView>
                     }
                 </>
             )}

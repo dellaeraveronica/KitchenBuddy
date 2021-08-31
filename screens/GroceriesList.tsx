@@ -8,6 +8,7 @@ import { useEffect, useState } from 'react';
 import { buyIngredient } from '../services/ingredients';
 import { TabMaterialIcon} from '../navigation';
 import { useNavigation } from '@react-navigation/native';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
 export interface groceryEntry {
     id?: string;
@@ -54,7 +55,7 @@ const GroceriesList = () => {
                         <Text style={styles.title}>Groceries list</Text>
                         <View style={styles.separator} />
                     </View>
-                    <ScrollView alwaysBounceVertical={false} showsVerticalScrollIndicator={false} >
+                    <KeyboardAwareScrollView alwaysBounceVertical={false} showsVerticalScrollIndicator={false} >
                         { groceries && groceries.map( (grocery: groceryEntry, index: number) => {
                             return(
                                 <React.Fragment key={index}>
@@ -90,7 +91,7 @@ const GroceriesList = () => {
                                 </React.Fragment>
                             )
                         }) }
-                    </ScrollView>
+                    </KeyboardAwareScrollView>
                     <Button title="Quick-add" onPress={() => navigation.navigate('QuickAddGrocery')} />
                 </>
             )}

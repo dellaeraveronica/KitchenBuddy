@@ -11,6 +11,7 @@ import Colors from '../../constants/Colors';
 import moment from 'moment';
 import CustomTextInput from '../../components/CustomTextInput';
 import { dataEntry } from '../AddIngredient';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
 const RecentlyBought = () => {
     const navigation = useNavigation();
@@ -50,7 +51,7 @@ const RecentlyBought = () => {
                         <View style={styles.separator} />
                     </View>
                     <CustomTextInput label="Search" placeholder="Enter a name" value={search} onChangeText={setSearch} />
-                    <ScrollView alwaysBounceVertical={false} showsVerticalScrollIndicator={false} style={{ marginBottom: 50 }}>
+                    <KeyboardAwareScrollView alwaysBounceVertical={false} showsVerticalScrollIndicator={false} style={{ marginBottom: 50 }}>
                         { groceries && groceries.map( (grocery: dataEntry, index: number) => {
                             return(
                                 <React.Fragment key={index}>
@@ -72,7 +73,7 @@ const RecentlyBought = () => {
                                 </React.Fragment>
                             )
                         }) }
-                    </ScrollView>
+                    </KeyboardAwareScrollView>
                 </>
             )}
         </View>

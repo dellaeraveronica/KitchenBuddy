@@ -20,6 +20,7 @@ import moment from 'moment';
 import {useState} from 'react';
 import Colors from '../constants/Colors';
 import {useNavigation, useRoute} from '@react-navigation/native';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
 const EditIngredientModal = () => {
   const router = useRoute();
@@ -62,7 +63,7 @@ const EditIngredientModal = () => {
           <Text style={styles.title}>Edit ingredient</Text>
           <View style={styles.separator} />
         </View>
-        <ScrollView alwaysBounceVertical={false} showsVerticalScrollIndicator={false} style={{ marginBottom: 30 }}>
+        <KeyboardAwareScrollView alwaysBounceVertical={false} showsVerticalScrollIndicator={false} style={{ marginBottom: 30 }}>
           <CustomTextInput label="Name *" placeholder="Enter a name" value={name} onChangeText={setName} />
           <CustomTextInput label="Brand" placeholder="Enter a brand name" value={brand} onChangeText={setBrand} />
           <CustomSelect label="Category" placeholder="Select a category" value={category} onValueChange={setCategory} items={ingredientCategories} />
@@ -71,7 +72,7 @@ const EditIngredientModal = () => {
           <CustomSelect label="Ripeness" placeholder="Select a ripeness" value={ripeness} onValueChange={setRipeness} items={ingredientRipeness} />
           <CustomTextInput isNumeric label="Quantity" placeholder="Enter a quantity" value={quantity.toString()} onChangeText={(val:string) => setQuantity(+val)} />
           <CustomDatePicker label="Expiration Date" onDateChange={setExpDate} date={expDate || new Date} />
-        </ScrollView>
+        </KeyboardAwareScrollView>
         <View style={{ marginVertical: 30 }}>
           <Button disabled={isLoading || !name} title="Edit" onPress={handleSubmit} />
         </View>

@@ -13,6 +13,7 @@ import moment from 'moment';
 import CustomSelect from '../../components/CustomSelect';
 import CustomTextInput from '../../components/CustomTextInput';
 import {freezeIngredient, openIngredient} from '../../services/ingredients';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
 
 const SameCategory = () => {
@@ -56,7 +57,7 @@ const SameCategory = () => {
                     <CustomTextInput label="Search" placeholder="Enter a name" value={search} onChangeText={setSearch} />
                     <CustomSelect label="Category" placeholder="Select a category" value={category} onValueChange={setCategory} items={ingredientCategories} />
                     { !!category &&
-                        <ScrollView alwaysBounceVertical={false} showsVerticalScrollIndicator={false} style={{ marginBottom: 50 }}>
+                        <KeyboardAwareScrollView alwaysBounceVertical={false} showsVerticalScrollIndicator={false} style={{ marginBottom: 50 }}>
                             { ingredients && ingredients.map( (ingredient: dataEntry, index: number) => {
                                 return(
                                     <React.Fragment key={index}>
@@ -96,7 +97,7 @@ const SameCategory = () => {
                                     </React.Fragment>
                                 )
                             }) }
-                        </ScrollView>
+                        </KeyboardAwareScrollView>
                     }
                 </>
             )}

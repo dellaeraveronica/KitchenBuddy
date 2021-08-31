@@ -11,6 +11,7 @@ import CustomDatePicker from '../components/CustomDatePicker';
 import { addIngredient } from '../services/ingredients';
 import moment from 'moment';
 import Colors from '../constants/Colors';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
 export interface dataEntry {
   id?: string;
@@ -113,7 +114,7 @@ const AddIngredient = () => {
         <Text style={styles.title}>Add ingredient</Text>
         <View style={styles.separator} />
       </View>
-      <ScrollView alwaysBounceVertical={false} showsVerticalScrollIndicator={false} style={{ marginBottom: 30 }}>
+      <KeyboardAwareScrollView alwaysBounceVertical={false} showsVerticalScrollIndicator={false} style={{ marginBottom: 30 }}>
         <CustomTextInput label="Name *" placeholder="Enter a name" value={name} onChangeText={setName} />
         <CustomTextInput label="Brand" placeholder="Enter a brand name" value={brand} onChangeText={setBrand} />
         <CustomSelect label="Category" placeholder="Select a category" value={category} onValueChange={setCategory} items={ingredientCategories} />
@@ -122,7 +123,7 @@ const AddIngredient = () => {
         <CustomSelect label="Ripeness" placeholder="Select a ripeness" value={ripeness} onValueChange={setRipeness} items={ingredientRipeness} />
         <CustomTextInput isNumeric label="Quantity" placeholder="Enter a quantity" value={quantity.toString()} onChangeText={(val: string) => setQuantity(+val)} />
         <CustomDatePicker label="Expiration Date" onDateChange={setExpDate} date={expDate || new Date} />
-      </ScrollView>
+      </KeyboardAwareScrollView>
       <Button disabled={isLoading || !name} title="Add" onPress={handleSubmit} />
     </View>
   );

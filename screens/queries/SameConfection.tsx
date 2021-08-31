@@ -13,6 +13,7 @@ import moment from 'moment';
 import CustomSelect from '../../components/CustomSelect';
 import {freezeIngredient, openIngredient} from '../../services/ingredients';
 import CustomTextInput from '../../components/CustomTextInput';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
 
 const SameConfection = () => {
@@ -56,7 +57,7 @@ const SameConfection = () => {
                     <CustomTextInput label="Search" placeholder="Enter a name" value={search} onChangeText={setSearch} />
                     <CustomSelect label="Confection type" placeholder="Select a confection type" value={confection} onValueChange={setConfection} items={ingredientConfectionTypes} />
                     { !!confection &&
-                    <ScrollView alwaysBounceVertical={false} showsVerticalScrollIndicator={false} style={{ marginBottom: 50 }}>
+                    <KeyboardAwareScrollView alwaysBounceVertical={false} showsVerticalScrollIndicator={false} style={{ marginBottom: 50 }}>
                         { ingredients && ingredients.map( (ingredient: dataEntry, index: number) => {
                             return(
                                 <React.Fragment key={index}>
@@ -96,7 +97,7 @@ const SameConfection = () => {
                                 </React.Fragment>
                             )
                         }) }
-                    </ScrollView>
+                    </KeyboardAwareScrollView>
                     }
                 </>
             )}

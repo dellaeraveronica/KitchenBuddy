@@ -12,6 +12,7 @@ import CustomTextInput from '../components/CustomTextInput';
 import { TabEntypoIcon, TabFA5Icon } from '../navigation';
 import { freezeIngredient, openIngredient } from '../services/ingredients';
 import { useNavigation } from '@react-navigation/native';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
 const today = new Date();
 
@@ -72,7 +73,7 @@ const ExpiringSoon = () => {
                 <View style={styles.separator} />
               </View>
               <CustomTextInput label="Search" placeholder="Enter a name" value={search} onChangeText={setSearch} />
-              <ScrollView alwaysBounceVertical={false} showsVerticalScrollIndicator={false} >
+              <KeyboardAwareScrollView alwaysBounceVertical={false} showsVerticalScrollIndicator={false} >
                 { expIngredients && expIngredients.map( (expIngredient: dataEntry, index: number) => {
                   return(
                       <React.Fragment key={index}>
@@ -116,7 +117,7 @@ const ExpiringSoon = () => {
                       </React.Fragment>
                   )
                 }) }
-              </ScrollView>
+              </KeyboardAwareScrollView>
             </>
         )}
       </View>

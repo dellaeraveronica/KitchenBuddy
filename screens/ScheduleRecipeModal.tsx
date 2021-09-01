@@ -149,7 +149,7 @@ const ScheduleRecipeModal = () => {
             </KeyboardAwareScrollView>
             <View style={{ marginVertical: 30, flexDirection: 'row', justifyContent: 'space-evenly' }}>
                 <Button disabled={isLoading || !prepDate} title="Save" onPress={handleSubmit} />
-                <Button disabled={isLoading || ( ingredients !== undefined ? false : true )} title="Cancel Recipe" onPress={handleCancelSubmit} />
+                <Button disabled={isLoading || ( ingredients !== undefined && ingredients.length > 0 ? false : true )} title="Cancel Recipe" onPress={handleCancelSubmit} />
             </View>
             {/* Use a light status bar on iOS to account for the black space above the modal */}
             <StatusBar style={Platform.OS === 'ios' ? 'light' : 'auto'} />

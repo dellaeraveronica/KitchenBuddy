@@ -20,7 +20,7 @@ const Recipes = () => {
 
     const [getAllRecipes, loading, error] = useCollection(
         firebase.default.firestore().collection('Recipes')
-            .orderBy('createdAt', 'desc'),
+            .orderBy('createdAt', 'asc'),
         {
             snapshotListenOptions: { includeMetadataChanges: true },
         }
@@ -29,9 +29,9 @@ const Recipes = () => {
     useEffect( () => {
         const recipesFirestore = getAllRecipes?.docs
             .map( (doc) => {
-                return { id: doc.id, ...doc.data() as any }}
+                return { dbID: doc.id, ...doc.data() as any }}
             )
-            .filter( (current) => current.title?.toLowerCase().includes( search.toLowerCase() ));;
+            .filter( (current) => current.title?.toLowerCase().includes( search.toLowerCase() ));
         setRecipes(recipesFirestore);
     }, [getAllRecipes, search]);
 
@@ -55,7 +55,7 @@ const Recipes = () => {
                         { recipes && recipes.map( (recipe: any, index: number) => {
                             return(
                                 <React.Fragment key={index}>
-                                    <TouchableOpacity onPress={() => null}>
+                                    <TouchableOpacity onPress={() => navigation.navigate('Schedule', { id: recipe.dbID, preparedAt: moment(recipe.preparedAt.toDate()).toDate() })}>
                                         <Image source={{ uri: recipe.image }} style={styles.recipeImage} />
                                         <Text>{recipe.id}</Text>
                                         <Text><Text style={{ fontWeight: 'bold' }}>Title:</Text> {recipe.title}</Text>

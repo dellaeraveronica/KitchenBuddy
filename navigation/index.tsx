@@ -31,6 +31,7 @@ import LowQuantity from '../screens/queries/LowQuantity';
 import QuickAddModal from '../screens/QuickAddModal';
 import SpoonacularModal from '../screens/SpoonacularModal';
 import Recipes from '../screens/queries/Recipes';
+import ScheduleRecipeModal from '../screens/ScheduleRecipeModal';
 
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
   return (
@@ -57,6 +58,7 @@ function RootNavigator() {
         <Stack.Screen name="EditIngredient" component={EditIngredientModal} options={{ headerShown: false}} />
         <Stack.Screen name="QuickAddGrocery" component={QuickAddModal} options={{ headerShown: false}} />
         <Stack.Screen name="Spoonacular" component={SpoonacularModal} options={{ headerShown: false}} />
+        <Stack.Screen name="Schedule" component={ScheduleRecipeModal} options={{ headerShown: false}} />
       </Stack.Group>
       <Stack.Screen name="MissingData" component={MissingData} options={{ headerShown: false}} />
       <Stack.Screen name="RecentlyAdded" component={RecentlyAdded} options={{ headerShown: false}} />

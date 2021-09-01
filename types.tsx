@@ -29,6 +29,7 @@ export type RootStackParamList = {
   ExpoBarCodeScanner: undefined;
   Recipes: undefined;
   Spoonacular: { data: { name: string | undefined, id: string | undefined }[] | undefined, closestExpDate: string };
+  Schedule: { id: string, preparedAt: Date };
 };
 
 export type RootStackScreenProps<Screen extends keyof RootStackParamList> = NativeStackScreenProps<

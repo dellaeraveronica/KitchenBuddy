@@ -30,7 +30,8 @@ const today = new Date();
 const SpoonacularModal = () =>  {
     const router = useRoute();
     const navigation = useNavigation();
-    const [ingredients, setIngredients] = useState<string[] | undefined>(undefined);
+    const [ingredients, setIngredients] = useState<dataEntry[] | undefined>(undefined);
+    const [onlyNames, setOnlyNames] = useState<any>(undefined);
     const {data, closestExpDate} = router.params as { data: dataEntry[], closestExpDate: any };
     const [search, setSeach] = useState<string>('');
     const [recipes, setRecipes] = useState([]);
@@ -38,7 +39,7 @@ const SpoonacularModal = () =>  {
     const [selectedItems, setSelectedItems] = useState<any>([]);
 
     const [getAllIngredients, loading, error] = useCollection(
-        firebase.default.firestore().collection('Ingredients'),
+        firebase.default.firestore().collection('Ingredients').orderBy( 'exp_date', 'asc' ),
         {
             snapshotListenOptions: { includeMetadataChanges: true },
         }
@@ -49,9 +50,9 @@ const SpoonacularModal = () =>  {
                 .map( (doc) => {
                     return { id: doc.id, ...doc.data() as dataEntry }}
                 )
-                .filter( (res) => moment(res.exp_date.toDate()).diff(today, 'days') > 0 )
-                .map( (res) => res.name);
-            setIngredients(ingredientsFirestore as string[]);
+                .filter( (res) => moment(res.exp_date.toDate()).diff(today, 'days') >= 0 && !res.recipeId )
+            setIngredients(ingredientsFirestore);
+            setOnlyNames(ingredientsFirestore?.map( (res) => res.name ));
         }
     , [getAllIngredients]);
 
@@ -74,27 +75,28 @@ const SpoonacularModal = () =>  {
         }
     }
 
-    const scheduleRecipe = () => {
-        setIsLoading(true);
-        try {
-            addRecipe({
-                title: '',
-                ingredients: '',
-                preparedAt: '',
-            } as recipeEntry)
-                .then( () => { Alert.alert('Success!', 'Recipe scheduled successfully'); })
-                .finally( () => setIsLoading(false));
-        } catch (e) {
-            console.error('Submit failed', e);
-        }
-    }
-
     const _toSeparatedByComma = () => {
         const strings = selectedItems.map( (item: any) => {
             return data.find( (val: any) => item === val.id )?.name;
         })
         console.log(strings);
         return strings.join(',')
+    }
+
+    const _getSelectedIngredient: any = () => {
+        const item = selectedItems.map( (item: any) => {
+            return data.find( (val: any) => item === val.id );
+        })
+        return item[0];
+    }
+
+    const _availableIngredients = (recipe: any) => {
+        const usedIngredients = recipe.usedIngredients.map( (ingredient: any) => ingredient.name );
+        const db = ingredients?.filter( (ingredient: dataEntry) =>
+            (usedIngredients.findIndex( (val: any) => ingredient.name?.toLowerCase().includes(val.toLowerCase()) ) !== -1)
+            || ingredient.id === selectedItems[0]  )
+                .map( (ingredient: dataEntry) => ingredient.id );
+        return db
     }
 
     const searchRecipes = () => {
@@ -139,17 +141,31 @@ const SpoonacularModal = () =>  {
                         <React.Fragment key={index}>
                             <Text><Text style={{ fontWeight: 'bold' }}>Name:</Text> {recipe.title}</Text>
                             { recipe.missedIngredientCount > 0 && recipe.missedIngredients.map( (missedIngredient: any, innerIndex: number) =>
-                                    <TouchableOpacity key={innerIndex} onPress={() => addMissingIngredientToGroceries({
-                                        name: missedIngredient.name,
-                                        amount: missedIngredient.amount,
-                                    })}>
-                                        <Text style={{ color: ingredients?.includes(missedIngredient.name) ? Colors.success : Colors.gunmetal }}>{missedIngredient.name}</Text>
-                                    </TouchableOpacity>
+                                    <React.Fragment key={innerIndex}>
+                                        { !onlyNames?.includes(missedIngredient.name) && <Text style={{ fontSize: 8 }}>Missing:</Text> }
+                                        <TouchableOpacity
+                                            disabled={onlyNames?.includes(missedIngredient.name)}
+                                            onPress={() => addMissingIngredientToGroceries({
+                                            name: missedIngredient.name,
+                                            amount: missedIngredient.amount,
+                                        })}>
+                                            <Text style={{ color: onlyNames?.includes(missedIngredient.name) ? Colors.success : Colors.gunmetal }}>{missedIngredient.name}</Text>
+                                        </TouchableOpacity>
+                                    </React.Fragment>
                                 )
                             }
+                            <TouchableOpacity
+                                disabled={!onlyNames?.includes(_getSelectedIngredient().name)}
+                                onPress={() => addMissingIngredientToGroceries({
+                                    name: _getSelectedIngredient().name,
+                                    amount: 1,
+                                })}>
+                                <Text style={{ color: onlyNames?.includes(_getSelectedIngredient().name) ? Colors.success : Colors.gunmetal }}>{_getSelectedIngredient().name}</Text>
+                            </TouchableOpacity>
                             <View style={{ flexDirection: 'row', justifyContent: 'flex-end' }}>
                                 <TouchableOpacity
-                                    onPress={ () => addRecipe({...recipe, createdAt: new Date(), preparedAt: moment().add(2, 'weeks').toDate()}) }
+                                    // @ts-ignore
+                                    onPress={ () => addRecipe({...recipe, createdAt: new Date(), preparedAt: moment().add(2, 'weeks').toDate()}, _availableIngredients(recipe)) }
                                     style={[styles.actionButton, { backgroundColor: Colors.orange }]}>
                                     <TabEntypoIcon name='plus' color={Colors.white} size={20} />
                                 </TouchableOpacity>

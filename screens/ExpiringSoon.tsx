@@ -60,7 +60,7 @@ const ExpiringSoon = () => {
     }
   }, [getAllExpIngredients, search]);
 
-  const _toMultiSelectDate = () => {
+  const _toMultiSelectData = () => {
     return expIngredients?.map( (exp) => {
       return { name: exp.name, id: exp.id }
     })
@@ -109,7 +109,7 @@ const ExpiringSoon = () => {
                             <TabFA5Icon name='dropbox' color={Colors.white} size={20} />
                           </TouchableOpacity>
                           <TouchableOpacity
-                              onPress={ () => navigation.navigate('Spoonacular', { data: _toMultiSelectDate(), closestExpDate: (new Date()).toLocaleDateString() }) }
+                              onPress={ () => navigation.navigate('Spoonacular', { data: [ { name: expIngredient.name, id: expIngredient.id } ], closestExpDate: (new Date()).toLocaleDateString() }) }
                               style={[styles.actionButton, { backgroundColor: Colors.gunmetal }]}>
                             <TabFA5Icon name='search' color={Colors.white} size={20} />
                           </TouchableOpacity>

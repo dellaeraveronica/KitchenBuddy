@@ -56,9 +56,43 @@ export const buyIngredient = async (id: string, data: Partial<dataEntry>) => {
         .catch( (err) => console.error('Something went wrong', err) )
 }
 
-export const addRecipe = async (data: recipeEntry) => {
+export const addRecipe = async (data: recipeEntry, availableIngredients: string[]) => {
     await firebase.default.firestore().collection(recipesPath).add(data)
-        .then( async () => console.log('Recipe scheduled successfully!'))
+        .then( async (res) => {
+            console.log('Recipe scheduled successfully!')
+            availableIngredients.forEach( (val) => {
+               addIngredientToRecipe(val, res.id)
+            });
+        })
         .catch( (err) => console.error('Something went wrong', err) )
+}
+
+export const addIngredientToRecipe = async (id: string, recipeId: string) => {
+    await firebase.default.firestore().collection(collectionPath).doc(id).update({
+        recipeId,
+        updatedAt: new Date()
+    })
+        .then( () => console.log('Ingredient updated successfully!') )
+        .catch( (err) => console.error('Something went wrong', err) )
+}
+
+export const editRecipePreparedAt = async (id: string, date: Date) => {
+    await firebase.default.firestore().collection(recipesPath).doc(id).update({
+        preparedAt: date,
+        updatedAt: new Date()
+    })
+        .then( () => console.log('Recipe updated successfully!') )
+        .catch( (err) => console.error('Something went wrong', err) )
+}
+
+export const cancelRecipe = async (ids: string[]) => {
+    for (const currentId of ids) {
+        await firebase.default.firestore().collection(collectionPath).doc(currentId).update({
+            recipeId: '',
+            updatedAt: new Date()
+        })
+            .then( () => { console.log('Ingredient updated successfully!') })
+            .catch( (err) => console.error('Something went wrong', err) )
+    }
 }
 

@@ -20,6 +20,8 @@ export interface groceryEntry {
     exp_date: any;
     createdAt: any;
     updatedAt: any;
+    recipeId?: string;
+    preparedAt?: any;
 }
 
 const today = new Date();
@@ -65,6 +67,7 @@ const GroceriesList = () => {
                                         <Text><Text style={{ fontWeight: 'bold' }}>Category:</Text> {grocery.category}</Text>
                                         <Text><Text style={{ fontWeight: 'bold' }}>Confection type:</Text> {grocery.confection_type}</Text>
                                         <Text><Text style={{ fontWeight: 'bold' }}>Exp. date:</Text> {moment(grocery.exp_date?.toDate()).format('LLL')}</Text>
+                                        <Text><Text style={{ fontWeight: 'bold' }}>To be prepared at:</Text> {grocery.preparedAt ? moment(grocery.preparedAt?.toDate()).format('LLL') : 'No recipe linked'}</Text>
                                     </TouchableOpacity>
                                     <View style={{ flexDirection: 'row', justifyContent: 'flex-end' }}>
                                         <TouchableOpacity
@@ -76,10 +79,11 @@ const GroceriesList = () => {
                                                 ripeness: '',
                                                 location: '',
                                                 brand: '',
-                                                exp_date: grocery.exp_date || today,
+                                                exp_date: grocery.preparedAt || grocery.exp_date || today,
                                                 boughtAt: new Date(),
                                                 createdAt: new Date(),
                                                 updatedAt: new Date(),
+                                                recipeId: grocery.recipeId || ''
                                             }) }
                                             style={[styles.actionButton, { backgroundColor: Colors.gunmetal }]}>
                                             <TabMaterialIcon name='add-shopping-cart' color={Colors.white} size={20} />

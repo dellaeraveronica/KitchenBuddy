@@ -7,8 +7,9 @@ Francesca Dandrea, 15587
 
 ## Installation
 
-We used the package manager yarn. Run:
+We used the package manager yarn. To run the project:
 
 - yarn install and
 - expo start
 
+commands are used.

@@ -21,7 +21,7 @@ const CustomDatePicker = ({ onDateChange, label, date }: CustomDatePickerProps) 
                 { Platform.OS === 'ios' && <DateTimePicker
                     onChange={ (evt, date) => { onDateChange(date); setShow(false) }}
                     value={date}
-                    display="default"
+                    display="compact"
                     mode="date"
                 /> }
                 { show && Platform.OS === 'android' && <DateTimePicker

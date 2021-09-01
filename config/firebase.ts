@@ -2,12 +2,12 @@ import * as firebase from 'firebase/app';
 
 // Config info unique to your project
 const firebaseConfig = {
-    apiKey: "AIzaSyB76OKyN0ZQUwA-YHtOvZV4Fp5ruoHgKiY",
-    authDomain: "the-fridge-c2a67.firebaseapp.com",
-    projectId: "the-fridge-c2a67",
-    storageBucket: "the-fridge-c2a67.appspot.com",
-    messagingSenderId: "159746970013",
-    appId: "1:159746970013:web:569170eac9b1e192a85f74"
+apiKey: "AIzaSyCqVrSA7_Ui7Z19qolddyBFr0lHb8fweXU",
+  authDomain: "kitchenbuddy-9c17c.firebaseapp.com",
+  projectId: "kitchenbuddy-9c17c",
+  storageBucket: "kitchenbuddy-9c17c.appspot.com",
+  messagingSenderId: "228852070271",
+  appId: "1:228852070271:web:9dc901102cb3ad2a2ecc4a"
 };
 
 // Initialize Firebase
